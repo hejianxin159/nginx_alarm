@@ -8,7 +8,7 @@
 </head>
 <body>
     {% for photo in photos %}
-	<div class="photo"><a href="{% url 'photos:photo' photo.image_id %}"><img src="{{ photo.image.url }}"></a></div>
+	<div class="photo"><a href="{% url 'photos:photo' photo.image_id %}"><img src="{% static 'Image/' %}{{ photo.image }}"></a></div>
 	<p>{{ photo.create_time }}</p>
     {% endfor %}
 <div class="pagenation">

@@ -23,19 +23,18 @@ class DayView(View):
             photo_create_time = Photo.objects.filter(create_time__startswith=day)[0]
             photo_create_time.day = day
             photos_days.append(photo_create_time)
-        for i in photos_days:
-            print (i.day)
-            # photo_day = str(photo_day).split(' ')[0]
-            # photos_day.append(photo_day)
-        # photos_day = list(set(photos_day))
-        # print(photos_day)
-        # for first_photos in photos_day:
-        #     first_photo = Photo.objects.filter(create_time__startswith=first_photos)[0]
-        #     first_photos.first_photo = first_photo
         context = {'photos_days': photos_days}
         return render(request, 'day.html', context)
 
-
+    def post(self, request):
+        create_time = request.POST.get('create_time', '1')
+        photo_name = request.POST.get('photo_name', '1')
+        photo = Photo()
+        photo.create_time = create_time
+        photo.image = photo_name
+        photo.save()
+        print (create_time, photo_name)
+        return JsonResponse({"res":1, "message":"chenggong"})
 class PhotosView(View):
     def get(self, request, day, page):
         create_time = time.strftime('%Y-%m-%d', time.localtime())
@@ -44,6 +43,7 @@ class PhotosView(View):
         for photos in all_photos:
             image_id = (str(photos.image)).split('/')[-1]
             photos.image_id = image_id
+            print(photos.image)
 
         paginator = Paginator(all_photos, 5)
         try:
@@ -78,3 +78,5 @@ class  PhotoView(View):
         content = {'image': image}
         print(content)
         return render(request, 'photos.html')
+
+

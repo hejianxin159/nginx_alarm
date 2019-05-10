@@ -10,7 +10,7 @@
 </head>
 <body>
 {% for photo_day in photos_days %}
-<div class="photo"><a href="{% url 'photos:photos' photo_day.day 1 %}" class="photo"><img src="{{ photo_day.image.url }}">{{ photo_day.day }}</a></div>
+<div class="photo"><a href="{% url 'photos:photos' photo_day.day 1 %}" class="photo"><img src="data:image/jpg;base64,{{ photo_day.image }}">{{ photo_day.day }}</a></div>
 {% endfor %}
 </body>
 </html>
